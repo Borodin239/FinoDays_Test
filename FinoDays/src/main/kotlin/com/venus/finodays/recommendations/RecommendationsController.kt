@@ -13,7 +13,7 @@ class RecommendationsController {
     @Autowired
     private lateinit var categoriesService: CategoriesService
 
-    @GetMapping("/top_categories/")
+    @GetMapping("/top_categories")
     fun getTopCategories(
         @RequestParam count: Int?
     ): List<Category> {
