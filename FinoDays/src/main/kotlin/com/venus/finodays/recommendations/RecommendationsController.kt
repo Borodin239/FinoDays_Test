@@ -1,16 +1,15 @@
 package com.venus.finodays.recommendations
 
-import org.elasticsearch.client.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.HttpServerErrorException
-import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("/recommendations/{user_id}/")
 class RecommendationsController() {
+
+    @Autowired
+    private lateinit var actionsService: ActionsService
 
     @Autowired
     private lateinit var categoriesService: CategoriesService
@@ -28,8 +27,13 @@ class RecommendationsController() {
     }
 
     @GetMapping("/actions")
-    fun getActions(): List<Action> {
-        return emptyList()
+    fun getActions(
+        @PathVariable("user_id") userId: Int?
+    ): ResponseEntity<List<Action>> {
+        if (userId == null)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(actionsService.getActions(userId))
         // todo: нормальная обработка (deniskorotchenko)
     }
 }
