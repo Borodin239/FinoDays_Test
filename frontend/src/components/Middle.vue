@@ -24,6 +24,9 @@
               <label for="password_input" class="form-label">Пароль</label>
               <input type="password" name="password_input" class="form-control" id="">
             </div>
+            <div>
+              <Category v-for="category in categories" :category="category" :key="category.name"/>
+            </div>
             <button type="submit" class="btn btn-outline-secondary">Войти</button>
           </form>
         </div>
@@ -36,8 +39,12 @@
 </template>
 
 <script>
+import Category from "@/components/categories/Category";
+
 export default {
-  name: "Middle"
+  name: "Middle",
+  components: {Category},
+  props: ["categories"],
 }
 </script>
 
