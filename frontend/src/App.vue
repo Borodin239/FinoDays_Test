@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <Middle/>
+    <Middle :categories="categories"/>
     <Footer/>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import Header from "@/components/Header";
 import Middle from "@/components/Middle";
 import Footer from "@/components/Footer";
+import axios from "axios";
 
 export default {
   name: 'App',
@@ -17,6 +18,16 @@ export default {
     Footer,
     Middle,
     Header,
+  },
+  data: function () {
+    return {
+      categories: []
+    }
+  },
+  beforeMount() {
+    axios.get("/recommendations/1/top_categories").then(response => {
+      this.categories = response.data
+    })
   }
 }
 </script>
