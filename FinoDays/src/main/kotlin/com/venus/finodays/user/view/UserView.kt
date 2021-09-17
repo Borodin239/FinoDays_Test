@@ -1,4 +1,4 @@
-package com.venus.finodays.user
+package com.venus.finodays.user.view
 
 data class UserView(
     val id: Long,

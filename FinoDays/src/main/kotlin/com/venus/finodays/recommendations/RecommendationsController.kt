@@ -6,8 +6,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/recommendations/{user_id}/")
-class RecommendationsController() {
+@CrossOrigin("http://localhost:8085")
+@RequestMapping("/recommendations/{userId}")
+class RecommendationsController {
 
     @Autowired
     private lateinit var actionsService: ActionsService
@@ -18,9 +19,10 @@ class RecommendationsController() {
     @Autowired
     private lateinit var dataService: DataService
 
+    @CrossOrigin("http://localhost:8085")
     @GetMapping("/top_categories")
     fun getTopCategories(
-        @PathVariable("user_id") userId: Int?,
+        @PathVariable userId: Int?,
         @RequestParam count: Int?
     ): ResponseEntity<List<Category>> {
         if (userId == null)
@@ -30,9 +32,10 @@ class RecommendationsController() {
         // todo: нормальная обработка (deniskorotchenko)
     }
 
+    @CrossOrigin("http://localhost:8085")
     @GetMapping("/actions")
     fun getActions(
-        @PathVariable("user_id") userId: Int?
+        @PathVariable userId: Int?
     ): ResponseEntity<List<Action>> {
         if (userId == null)
             return ResponseEntity.notFound().build()
@@ -41,6 +44,7 @@ class RecommendationsController() {
         // todo: нормальная обработка (deniskorotchenko)
     }
 
+    @CrossOrigin("http://localhost:8085")
     @GetMapping("/records")
     fun getRecords(@PathVariable("user_id") userId: Int?): ResponseEntity<Int> {
         if (userId == null)
