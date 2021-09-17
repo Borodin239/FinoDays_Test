@@ -24,7 +24,7 @@
               <label for="password_input" class="form-label">Пароль</label>
               <input type="password" name="password_input" class="form-control" id="">
             </div>
-            <button type="submit" class="btn btn-outline-secondary" v-on:click="changePage">Войти</button>
+            <button type="submit" class="btn btn-outline-secondary" v-on:click="changePage('Index')">Войти</button>
           </form>
         </div>
       </div>

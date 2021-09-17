@@ -1,6 +1,6 @@
 <template>
   <div class="middle">
-    <Index :categories = categories v-if="page === 'Index'" />
+    <Index :categories = categories :expenses = expenses  v-if="page === 'Index'" />
     <Enter v-if="page === 'Enter'"/>
   </div>
 </template>
@@ -13,7 +13,7 @@ import Index from "@/components/middle/Index";
 export default {
   name: "Middle",
   components: {/*Category,*/ Index, Enter},
-  props: ["categories"],
+  props: ["categories", "expenses"],
   data: function () {
     return {
       page: "Enter"
