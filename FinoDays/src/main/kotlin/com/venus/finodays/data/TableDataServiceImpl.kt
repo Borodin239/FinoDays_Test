@@ -1,8 +1,8 @@
 package com.venus.finodays.data
 
+import com.venus.finodays.recommendations.CategoriesService
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
-import org.springframework.web.bind.annotation.PathVariable
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.toPath
@@ -44,5 +44,18 @@ class TableDataServiceImpl : DataService {
 
     override fun size(userId: Int): Int {
         return data[userId]?.size ?: 0
+    }
+
+    override fun countSpended(userId: Int): Map<CategoriesService.CategoryNames, Double> {
+        val counts = mutableMapOf<CategoriesService.CategoryNames, Double>()
+        for (category in CategoriesService.CategoryNames.values())
+            counts[category] = 0.0
+        for (record in data[userId] ?: emptyList()) {
+            val category = CategoriesService.fromMMC(record.MMC)
+            val value: Double = record.transactionSumL * 0.01 + record.transactionSumH
+            counts[category] = counts.getOrDefault(category, 0).toDouble() -+ value
+        }
+
+        return counts
     }
 }
