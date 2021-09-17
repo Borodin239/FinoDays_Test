@@ -1,5 +1,6 @@
 package com.venus.finodays.recommendations
 
+import com.venus.finodays.data.DataService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,6 +14,9 @@ class RecommendationsController() {
 
     @Autowired
     private lateinit var categoriesService: CategoriesService
+
+    @Autowired
+    private lateinit var dataService: DataService
 
     @GetMapping("/top_categories")
     fun getTopCategories(
@@ -35,5 +39,13 @@ class RecommendationsController() {
 
         return ResponseEntity.ok(actionsService.getActions(userId))
         // todo: нормальная обработка (deniskorotchenko)
+    }
+
+    @GetMapping("/records")
+    fun getRecords(@PathVariable("user_id") userId: Int?): ResponseEntity<Int> {
+        if (userId == null)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(dataService.size(userId))
     }
 }
