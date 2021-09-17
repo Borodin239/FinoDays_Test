@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/recommendations/{user_id}")
+@CrossOrigin("http://localhost:8080")
+@RequestMapping("/api/recommendations/{userId}")
 class RecommendationsController {
 
     @Autowired
@@ -16,7 +17,7 @@ class RecommendationsController {
 
     @GetMapping("/top_categories")
     fun getTopCategories(
-        @PathVariable("user_id") userId: Int?,
+        @PathVariable userId: Int?,
         @RequestParam count: Int?
     ): ResponseEntity<List<Category>> {
         if (userId == null)
@@ -28,7 +29,7 @@ class RecommendationsController {
 
     @GetMapping("/actions")
     fun getActions(
-        @PathVariable("user_id") userId: Int?
+        @PathVariable userId: Int?
     ): ResponseEntity<List<Action>> {
         if (userId == null)
             return ResponseEntity.notFound().build()
