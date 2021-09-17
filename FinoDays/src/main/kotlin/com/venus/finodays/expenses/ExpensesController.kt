@@ -21,7 +21,8 @@ class ExpensesController {
             return ResponseEntity.notFound().build()
 
         val counts = dataService.countSpended(userId)
-        val ans = counts.toList().filter { p -> p.first != CategoriesService.CategoryNames.TRANSFERS }. map {
+        val ans = counts.toList().filter { p -> p.first != CategoriesService.CategoryNames.TRANSFERS }
+            .filter { p -> p.second.toLong() != 0L }.sortedBy { p -> -p.second }. map {
             p -> Expense(p.first.value, p.second.roundToLong())
         }.toList()
         return ResponseEntity.ok(ans)
