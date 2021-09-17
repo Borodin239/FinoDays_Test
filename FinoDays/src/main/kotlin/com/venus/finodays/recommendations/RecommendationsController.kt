@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin("http://localhost:8080")
-@RequestMapping("/api/recommendations/{userId}")
+@CrossOrigin("http://localhost:8085")
+@RequestMapping("/recommendations/{userId}")
 class RecommendationsController {
 
     @Autowired
@@ -15,6 +15,7 @@ class RecommendationsController {
     @Autowired
     private lateinit var categoriesService: CategoriesService
 
+    @CrossOrigin("http://localhost:8085")
     @GetMapping("/top_categories")
     fun getTopCategories(
         @PathVariable userId: Int?,
@@ -27,6 +28,7 @@ class RecommendationsController {
         // todo: нормальная обработка (deniskorotchenko)
     }
 
+    @CrossOrigin("http://localhost:8085")
     @GetMapping("/actions")
     fun getActions(
         @PathVariable userId: Int?
