@@ -42,6 +42,9 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
+
+    compile("org.apache.commons:commons-csv:1.9.0")
+
 }
 
 tasks.withType<KotlinCompile> {
