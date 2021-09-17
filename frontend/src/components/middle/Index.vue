@@ -50,15 +50,12 @@
         </div>
 
         <div class="row" style="margin-top: 4vh">
-          <div class="col ct-chart ct-perfect-fourth" style="flex-grow: 3"></div>
+          <!--<div class="col" style="flex-grow: 3">
+            <line-chart :chart-data="dk"></line-chart>
+          </div>-->
           <div class="col" style="flex-grow: 2">
             <ul class="list-group list-group-flush">
-              <li v-for="expense in expenses" :key="expense.category"> ${{expense.category}} <b>${{expense.expense}} ₽</b> </li>
-              <!--<li class="list-group-item">Путешествия <b>234 032 ₽</b></li>
-              <li class="list-group-item">Еда <b>143 392 ₽</b></li>
-              <li class="list-group-item">Одежда <b>77 039 ₽</b></li>
-              <li class="list-group-item">Дом, ремонт <b>63 943 ₽</b></li>-->
-              <li class="list-group-item">Прочее <b>12 492 ₽</b></li>
+              <li class="list-group-item" v-for="expense in expenses" :key="expense.category"> {{expense.category}} <b> {{expense.expense}} ₽</b> </li>
             </ul>
           </div>
         </div>
@@ -96,10 +93,37 @@
 </template>
 
 <script>
+import { Line } from 'vue-chartjs'
 
 export default {
+  extends: Line,
   name: "Index",
-  props: ["categories", "expenses"]
+  props: ["categories", "expenses"],
+  data: function () {
+    return {
+      chartdata: this.expenses,
+      options: this.expenses
+    }
+  },
+  mounted () {
+    this.dk = {
+      labels: [this.getRandomInt(), this.getRandomInt()],
+      datasets: [
+        {
+          label: 'Data One',
+          backgroundColor: '#f87979',
+          data: [this.getRandomInt(), this.getRandomInt()]
+        }, {
+          label: 'Data One',
+          backgroundColor: '#f87979',
+          data: [this.getRandomInt(), this.getRandomInt()]
+        }
+      ]
+    }
+  },
+  getRandomInt () {
+    return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+  }
 }
 
 </script>
@@ -196,6 +220,8 @@ input:focus {
 
 <!-- Рисуем график -->
 <!--<script>
+import VueChartist from 'v-chartist';;
+
 var data = {
   labels: ['Путешествия', 'Еда', 'Одежда', 'Дом и ремонт', 'Остальное'],
   series: [200, 150, 100, 70, 50]
@@ -222,5 +248,5 @@ var responsiveOptions = [
   }]
 ];
 
-new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+new Chartist.PI('.ct-chart', data, options, responsiveOptions);
 </script>-->
