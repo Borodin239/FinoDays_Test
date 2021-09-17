@@ -24,9 +24,11 @@ export default {
       categories: []
     }
   },
-  beforeMount() {
-    axios.get("/recommendations/1/top_categories").then(response => {
-      this.categories = response.data
+  beforeCreate() {
+    this.$root.$on("getCategories", (id) => {
+      axios.get(`http://localhost:8085/recommendations/${id}/top_categories`).then(response => {
+        this.categories = response.data
+      })
     })
   }
 }

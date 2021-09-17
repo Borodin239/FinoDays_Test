@@ -1,23 +1,33 @@
 package com.venus.finodays
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.web.cors.CorsConfiguration
 
 @Configuration
 class SecurityConfiguration: WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity?) {
         if (http != null) {
-            http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
+            http.cors().configurationSource { corsConfig() }
+
         } else {
             super.configure(http as HttpSecurity?)
         }
+    }
+
+    @Value("http://localhost:8080")
+    lateinit var corsAllowedList: List<String>
+
+    private fun corsConfig(): CorsConfiguration {
+        val config = CorsConfiguration().applyPermitDefaultValues()
+        config.allowedMethods = HttpMethod.values().map { value -> value.name }
+        config.allowCredentials = true
+        config.allowedOrigins = corsAllowedList
+        return config
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {
