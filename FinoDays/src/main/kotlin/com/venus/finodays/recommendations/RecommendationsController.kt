@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/recommendations/{user_id}/")
-class RecommendationsController() {
+@RequestMapping("/api/recommendations/{user_id}")
+class RecommendationsController {
 
     @Autowired
     private lateinit var actionsService: ActionsService
