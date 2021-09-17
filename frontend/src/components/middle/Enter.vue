@@ -46,7 +46,8 @@ export default {
   methods: {
     changePage: function (page) {
       this.$root.$emit("onChangePage", page);
-      this.$root.$emit("getCategories", this.user_id)
+      this.$root.$emit("getCategories", this.user_id);
+      this.$root.$emit("getExpenses", this.user_id);
     }
   }
 }
