@@ -1,8 +1,8 @@
 <template>
   <footer>
     <div>
-      © 2001 – 2021 ПAO «Промсвязьбанк»
-      Генеральная лицензия на осуществление банковских операций № 3251 от 17 декабря 2014
+      <p> © 2001 – 2021 ПAO «Рога и копыта» <p/>
+      <p> Генеральная лицензия на осуществление банковских операций № XXXX от XX декабря XXXX года </p>
     </div>
   </footer>
 </template>
@@ -25,8 +25,8 @@ footer {
 }
 
 div {
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-  margin-left: 50vh;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 5vh;
 }
 </style>
