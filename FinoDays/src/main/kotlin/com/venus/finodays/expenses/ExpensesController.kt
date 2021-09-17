@@ -5,7 +5,6 @@ import com.venus.finodays.recommendations.CategoriesService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 @RestController
@@ -22,7 +21,7 @@ class ExpensesController {
             return ResponseEntity.notFound().build()
 
         val counts = dataService.countSpended(userId)
-        val ans = counts.toList().stream().map {
+        val ans = counts.toList().filter { p -> p.first != CategoriesService.CategoryNames.TRANSFERS }. map {
             p -> Expense(p.first.value, p.second.roundToLong())
         }.toList()
         return ResponseEntity.ok(ans)

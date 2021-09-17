@@ -24,7 +24,8 @@ class CategoriesService {
         ELECTRONICS("Электроника"),
         SUPERMARKETS("Супермаркеты и универмаги"),
         HOME("Товары для дома и ремонта"),
-        OTHER("Не кешбек")
+        TRANSFERS("Переводы"),
+        OTHER("Другое")
     }
     companion object {
         fun fromMMC(mmc: Long): CategoryNames =
@@ -78,6 +79,8 @@ class CategoriesService {
                 5200, 5712, 5963, 5714, 5039,
                 5074, 5198, 5211, 5231, 5713 -> CategoryNames.HOME
 
+                4829, 6536 -> CategoryNames.TRANSFERS
+
                 else -> CategoryNames.OTHER
             }
     }
@@ -108,7 +111,8 @@ class CategoriesService {
 
     fun getTopCategories(userId: Int, count: Int = 5): List<Category> {
         val counts = dataService.countPotentialCashback(userId).toList()
-        val ans = counts.sortedBy { p -> -p.second }.take(count).map { p -> Category(p.first.value, p.second) }.toList()
+        val ans = counts.sortedBy { p -> -p.second }.filter { p -> p.first != CategoryNames.OTHER && p.first != CategoryNames.TRANSFERS }
+            .take(count).map { p -> Category(p.first.value, p.second) }.toList()
 
         return ans
     }
