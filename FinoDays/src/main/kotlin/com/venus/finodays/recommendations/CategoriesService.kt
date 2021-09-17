@@ -1,11 +1,13 @@
 package com.venus.finodays.recommendations
 
+import com.venus.finodays.data.DataService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import kotlin.math.min
 
 @Service
 class CategoriesService {
-    enum class CategoryNames(name: String) {
+    enum class CategoryNames(val value: String) {
         CHILDREN("Товары для детей"),
         BEAUTY("Красота"),
         CINEMA_AND_THEATRES("Кино и театры"),
@@ -80,6 +82,7 @@ class CategoriesService {
             }
     }
 
+    /*
     private val kTopCategories = mapOf<Int, List<Category>>(
         1 to listOf(
             Category("Test1_1", "https://e7.pngegg.com/pngimages/718/1015/png-clipart-linkedin-social-media-computer-icons-social-networking-service-microsoft-coin-blue-angle.png"),
@@ -98,9 +101,15 @@ class CategoriesService {
             Category("Test2_3", "https://e7.pngegg.com/pngimages/718/1015/png-clipart-linkedin-social-media-computer-icons-social-networking-service-microsoft-coin-blue-angle.png"),
             Category("Test2_4", "https://e7.pngegg.com/pngimages/718/1015/png-clipart-linkedin-social-media-computer-icons-social-networking-service-microsoft-coin-blue-angle.png")
         ),
-    )
+    )*/
+
+    @Autowired
+    private lateinit var dataService: DataService
 
     fun getTopCategories(userId: Int, count: Int = 5): List<Category> {
-        return kTopCategories[userId]?.subList(0, min(kTopCategories[userId]?.size ?: 0, count)) ?: emptyList()
+        val counts = dataService.countPotentialCashback(userId).toList()
+        val ans = counts.sortedBy { p -> -p.second }.take(count).map { p -> Category(p.first.value, p.second) }.toList()
+
+        return ans
     }
 }

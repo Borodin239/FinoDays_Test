@@ -23,7 +23,7 @@ class ExpensesController {
 
         val counts = dataService.countSpended(userId)
         val ans = counts.toList().stream().map {
-            p -> Expense(p.first.name, p.second.roundToLong())
+            p -> Expense(p.first.value, p.second.roundToLong())
         }.toList()
         return ResponseEntity.ok(ans)
     }

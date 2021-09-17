@@ -29,7 +29,6 @@ class RecommendationsController {
             return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(categoriesService.getTopCategories(userId, count ?: 5))
-        // todo: нормальная обработка (deniskorotchenko)
     }
 
     @CrossOrigin("http://localhost:8080")
